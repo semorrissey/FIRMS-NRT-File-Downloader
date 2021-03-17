@@ -127,7 +127,7 @@ app.post("/push", bodyParser.json(), function(req, res) {
 });
 
 app.post("/recieve", function(req, res) {
-  readFiles(__dirname, pushData);
+  readFiles(__dirname + "/files/", pushData);
   //res.setStatusCode(200);
 })
 

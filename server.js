@@ -149,7 +149,7 @@ app.post("/push", bodyParser.json(), function(req, res) {
 });
 
 app.post("/recieve", async function(req, res) {
-  await fetchDownload();
+  //await fetchDownload();
   readFiles(__dirname + "/files/", pushData);
   //res.setStatusCode(200);
 })

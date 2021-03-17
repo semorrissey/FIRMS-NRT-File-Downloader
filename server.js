@@ -113,7 +113,7 @@ async function addDocs(info) {
       ordered: true
     };
     //remove old info for new info
-    await dbClient.collection.deleteMany({});
+    await collection.deleteMany({});
     //post new info
     const result = await collection.insertMany(info);
     console.log(result.insertedCount + 'documents were inserted');

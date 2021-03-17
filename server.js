@@ -38,17 +38,15 @@ const dbClient = new MongoClient(uri, {
 
 //reads file into array and converts to JSON
 
-function readFiles(dirname, onFileContent, onError) {
+function readFiles(dirname, onFileContent) {
   fs.readdir(dirname, function(err, filenames) {
     if (err) {
-      onError(err);
-      return;
+      throw err;
     }
     filenames.forEach(function(filename) {
       fs.readFile(dirname + filename, 'utf-8', function(err, content) {
         if (err) {
-          onError(err);
-          return;
+          throw err;
         }
         onFileContent(filename, content);
       });
@@ -129,9 +127,7 @@ app.post("/push", bodyParser.json(), function(req, res) {
 });
 
 app.post("/recieve", function(req, res) {
-  readFiles(__dirname, pushData, function(err) {
-    if (err) throw err;
-  });
+  readFiles(__dirname, pushData);
   //res.setStatusCode(200);
 })
 

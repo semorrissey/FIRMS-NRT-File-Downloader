@@ -148,8 +148,8 @@ app.post("/push", bodyParser.json(), function(req, res) {
   addDocs(req.body).catch(console.dir);
 });
 
-app.post("/recieve", function(req, res) {
-  fetchDownload();
+app.post("/recieve", async function(req, res) {
+  await fetchDownload();
   readFiles(__dirname + "/files/", pushData);
   //res.setStatusCode(200);
 })

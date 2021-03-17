@@ -116,7 +116,7 @@ function callDownloadScript(req, res) {
 }
 
 async function fetchDownload() {
-  await fetch("http://localhost:5000/download?source=https%3A%2F%2Fnrt3.modaps.eosdis.nasa.gov%2Fapi%2Fv2%2Fcontent%2Farchives%2FFIRMS%2Fviirs%2FSouthEast_Asia&destination=files%2F&token=bWFlcGluZ25vZmlyZTpiV0ZsY0dsdVoyNXZabWx5WlVCbmJXRnBiQzVqYjIwPToxNjE2MDE2Nzg4OmQzYjY0ZmNlNTBjYWI2ZDYzZmU3YTUxYWM2ZjVmOTc3MWIwN2FhOWY", {
+  await fetch("https://firmsnrtdownloader.herokuapp.com/download?source=https%3A%2F%2Fnrt3.modaps.eosdis.nasa.gov%2Fapi%2Fv2%2Fcontent%2Farchives%2FFIRMS%2Fviirs%2FSouthEast_Asia&destination=files%2F&token=bWFlcGluZ25vZmlyZTpiV0ZsY0dsdVoyNXZabWx5WlVCbmJXRnBiQzVqYjIwPToxNjE2MDE2Nzg4OmQzYjY0ZmNlNTBjYWI2ZDYzZmU3YTUxYWM2ZjVmOTc3MWIwN2FhOWY", {
     method: "GET"
   });
 }

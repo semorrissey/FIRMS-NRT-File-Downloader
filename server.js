@@ -70,7 +70,7 @@ function reading() {
         }
       });*/
     }
-    fetch("http://localhost:3000/push", {
+    fetch("https://firmsnrtdownloader.herokuapp.com/push", {
       method: "POST",
       body: JSON.stringify(jsonResult),
       headers: {

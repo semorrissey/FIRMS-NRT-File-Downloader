@@ -107,18 +107,16 @@ app.get('/download', callDownloadScript);
 
 function callDownloadScript(req, res) {
 
-  var spawn = require("child_process").spawn;
-
-  var process = spawn('python', ["./laads-data-download.py",
+  var spawn = require("child_process").spawnSync('python', ["./laads-data-download.py",
     req.query.source,
     req.query.destination,
     req.query.token
   ]);
-  console.log("I downloaded");
+  console.log(spawn.stdout);
 }
 
-function fetchDownload() {
-  fetch("https://firmsnrtdownloader.herokuapp.com/download?source=https%3A%2F%2Fnrt3.modaps.eosdis.nasa.gov%2Fapi%2Fv2%2Fcontent%2Farchives%2FFIRMS%2Fviirs%2FSouthEast_Asia&destination=files%2F&token=bWFlcGluZ25vZmlyZTpiV0ZsY0dsdVoyNXZabWx5WlVCbmJXRnBiQzVqYjIwPToxNjE2MDE2Nzg4OmQzYjY0ZmNlNTBjYWI2ZDYzZmU3YTUxYWM2ZjVmOTc3MWIwN2FhOWY", {
+async function fetchDownload() {
+  await fetch("http://localhost:5000/download?source=https%3A%2F%2Fnrt3.modaps.eosdis.nasa.gov%2Fapi%2Fv2%2Fcontent%2Farchives%2FFIRMS%2Fviirs%2FSouthEast_Asia&destination=files%2F&token=bWFlcGluZ25vZmlyZTpiV0ZsY0dsdVoyNXZabWx5WlVCbmJXRnBiQzVqYjIwPToxNjE2MDE2Nzg4OmQzYjY0ZmNlNTBjYWI2ZDYzZmU3YTUxYWM2ZjVmOTc3MWIwN2FhOWY", {
     method: "GET"
   });
 }

@@ -4,6 +4,7 @@ const fetch = require('node-fetch');
 const fs = require("fs");
 const bodyParser = require("body-parser");
 
+
 require('dotenv').config();
 
 const app = express();
@@ -35,6 +36,9 @@ const dbClient = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
+
+//download nasa files to /files/ directory using perl script
+
 
 //reads file into array and converts to JSON
 
@@ -97,6 +101,26 @@ async function csvDownload() {
   });
   console.log("i worked");
   return true;
+}
+
+app.get('/download', callDownloadScript);
+
+function callDownloadScript(req, res) {
+
+  var spawn = require("child_process").spawn;
+
+  var process = spawn('python', ["./laads-data-download.py",
+    req.query.source,
+    req.query.destination,
+    req.query.token
+  ]);
+  console.log("I downloaded");
+}
+
+function fetchDownload() {
+  fetch("https://firmsnrtdownloader.herokuapp.com/download?source=https%3A%2F%2Fnrt3.modaps.eosdis.nasa.gov%2Fapi%2Fv2%2Fcontent%2Farchives%2FFIRMS%2Fviirs%2FSouthEast_Asia&destination=files%2F&token=bWFlcGluZ25vZmlyZTpiV0ZsY0dsdVoyNXZabWx5WlVCbmJXRnBiQzVqYjIwPToxNjE2MDE2Nzg4OmQzYjY0ZmNlNTBjYWI2ZDYzZmU3YTUxYWM2ZjVmOTc3MWIwN2FhOWY", {
+    method: "GET"
+  });
 }
 
 

@@ -33,7 +33,7 @@ app.get("/libs/require.js", function(req, res) {
 //mongodb connection setup
 const MongoClient = require('mongodb').MongoClient;
 const uri =
-  'mongodb+srv://admin:${process.env.DB_PASSWORD}@fire-data-firms.z117n.mongodb.net/FireData?retryWrites=true&w=majority';
+  'mongodb+srv://admin:0dn5QCnxK0rqAEND@fire-data-firms.z117n.mongodb.net/FireData?retryWrites=true&w=majority';
 const dbClient = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true

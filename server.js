@@ -8,7 +8,7 @@ require('dotenv').config();
 
 const app = express();
 
-const port = 3000;
+const port = process.env.PORT || 5000;
 
 app.use(express.static('public'));
 app.use(bodyParser.json({
@@ -101,7 +101,6 @@ async function addDocs(info) {
 }
 
 app.post("/push", bodyParser.json(), function(req, res) {
-  console.log(req.body);
   addDocs(req.body).catch(console.dir);
 });
 

@@ -4,50 +4,22 @@
   <title>FIRMS Data Downloader</title>
 
   <script type="text/javascript">
-    const fs = require('fs');
-    //reads file into array and converts to JSON
-    function reading() {
-      fs.readFile(__dirname + '/files/VIIRS_I_SouthEast_Asia_VNP14IMGTDL_NRT_2021068.txt', 'utf8', function read(err, data) {
-        if (err) throw err;
-        const info = data.toString();
-        var array = info.split("\n");
-        var jsonKeys = array[0].split(",");
-        array.splice(0, 1);
-        var jsonResult = new Array;
-        for (i in array) {
-          var temp = array[i].split(",");
-          var json = {};
-          for (j in temp) {
-            json[jsonKeys[j]] = temp[j];
-          }
-          jsonResult.push(JSON.stringify(json));
+    async function getData() {
+      fetch("/recieve", {
+        method: "POST",
+        body: JSON.stringify({
+          name: 12
+        }),
+        headers: {
+          'Content-Type': 'application/json',
         }
-        for (k = 0; k < jsonResult.length; k += 100) {
-          var payload = new Array;
-          var temp = jsonResult.slice(k, k + 100);
-          for (l = 0; l < 100; l++) {
-            payload.push(temp[l]);
-          }
-          /*fetch("https://maepingfirepa.herokuapp.com/push", {
-            method: "POST",
-            body: JSON.stringify(payload),
-            headers: {
-              "Content-Type": "application/json"
-            }
-          });*/
-        }
-        fetch("/push", {
-          method: "POST",
-          body: JSON.stringify(jsonResult),
-          headers: {
-            "Content-Type": "application/json"
-          }
-        });
+
       });
+
     }
   </script>
 </head>
 
 <body>
-  <button type="button" name="Click Me" onclick="reading();"></button>
+  <button type="button" name="Click Me" onclick="getData();">Click Me</button>
 </body>

@@ -37,11 +37,11 @@ const dbClient = new MongoClient(uri, {
   useUnifiedTopology: true
 });
 dbClient.connect().then(() => console.log('MongoDB connected...'))
-      .catch(err => console.log(err));;
+  .catch(err => console.log(err));;
 
 //reads file into array and converts to JSON
 
-function readFiles(dirname, onFileContent) {
+async function readFiles(dirname, onFileContent) {
   fs.readdir(dirname, function(err, filenames) {
     if (err) {
       throw err;
@@ -71,28 +71,35 @@ function pushData(fname, data) {
     }
     jsonResult.push(json);
   }
-  fetch("http://188.166.191.81:8000/push", {
+  fs.writeFile('./data.json', JSON.stringify(jsonResult), err => {
+    // error checking
+    if (err) throw err;
+
+    console.log("New data added");
+  });
+
+  /*fetch("http://188.166.191.81:8000/push", {
     method: "POST",
     body: JSON.stringify(jsonResult),
     headers: {
       "Content-Type": "application/json"
     }
-  });
+  });*/
 }
 
 //requests from database
 
 async function addDocs(info) {
-    const collection = dbClient.db("FireData").collection("NasaFirmsData");
+  const collection = dbClient.db("FireData").collection("NasaFirmsData");
 
-    const options = {
-      ordered: true
-    };
-    //remove old info for new info
-    await collection.deleteMany({});
-    //post new info
-    const result = await collection.insertMany(info);
-    console.log(result.insertedCount + 'documents were inserted'); 
+  const options = {
+    ordered: true
+  };
+  //remove old info for new info
+  await collection.deleteMany({});
+  //post new info
+  const result = await collection.insertMany(info);
+  console.log(result.insertedCount + 'documents were inserted');
 }
 
 app.post("/push", bodyParser.json(), function(req, res) {
@@ -100,8 +107,22 @@ app.post("/push", bodyParser.json(), function(req, res) {
 });
 
 app.post("/recieve", async function(req, res) {
+
+});
+
+app.get('/download', function(req, res) {
+  /*await fs.unlink("data.json", (err) => {
+    if (err) {
+      console.error(err)
+      return
+    }
+  });*/
+  //console.log("file deleted and ready to rewrite");
   readFiles("/root/FIRMS/viirs/SouthEast_Asia/", pushData);
-})
+  const file = `data.json`;
+  res.download(file); // Set disposition and send it.
+});
+
 
 
 

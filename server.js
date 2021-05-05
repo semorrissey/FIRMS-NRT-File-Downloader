@@ -119,7 +119,7 @@ app.get('/download', function(req, res) {
   });*/
   //console.log("file deleted and ready to rewrite");
   readFiles("/root/FIRMS/viirs/SouthEast_Asia/", pushData);
-  const file = `data.json`;
+  const file = `./data.json`;
   res.download(file); // Set disposition and send it.
 });
 

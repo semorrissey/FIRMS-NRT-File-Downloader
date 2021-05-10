@@ -70,13 +70,24 @@ function pushData(fname, data) {
       json[jsonKeys[j]] = temp[j];
     }
     jsonResult.push(json);
-  }
-  fs.writeFile('./data.json', JSON.stringify(jsonResult), err => {
-    // error checking
-    if (err) throw err;
+    try {
+      if (fs.existsSync('./data.json')) {
+        fs.appendFile('./data.json', JSON.stringify(json), function(err) {
+          if (err) throw err;
+          console.log('Saved!');
+        });
+      } else {
+        fs.writeFile('./data.json', JSON.stringify(json), err => {
+          // error checking
+          if (err) throw err;
 
-    console.log("New data added");
-  });
+          console.log("Saved!");
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   /*fetch("http://188.166.191.81:8000/push", {
     method: "POST",
@@ -118,7 +129,8 @@ app.get('/download', function(req, res) {
     }
   });*/
   //console.log("file deleted and ready to rewrite");
-  readFiles("/root/FIRMS/viirs/SouthEast_Asia/", pushData);
+  readFiles("./files/", pushData);
+  //readFiles("/root/FIRMS/viirs/SouthEast_Asia/", pushData);
   const file = `./data.json`;
   res.download(file); // Set disposition and send it.
 });

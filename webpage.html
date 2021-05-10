@@ -5,18 +5,7 @@
 
   <script type="text/javascript">
     async function getData() {
-      fetch("/download", {
-        method: "POST",
-        body: JSON.stringify({
-          name: 12
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        }
-
-      }).then(response => response.json());
-
-
+      fetch("/download").then(response => response.json());
     }
   </script>
 </head>

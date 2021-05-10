@@ -129,7 +129,7 @@ app.get('/download', async function(req, res) {
     }
   });*/
   //console.log("file deleted and ready to rewrite");
-  await readFiles("./files/", pushData);
+  await readFiles("/root/FIRMS/viirs/SouthEast_Asia/", pushData);
   //readFiles("/root/FIRMS/viirs/SouthEast_Asia/", pushData);
   const file = `./data.json`;
   res.download(file); // Set disposition and send it.

@@ -121,7 +121,7 @@ app.post("/recieve", async function(req, res) {
 
 });
 
-app.get('/download', function(req, res) {
+app.get('/download', async function(req, res) {
   /*await fs.unlink("data.json", (err) => {
     if (err) {
       console.error(err)
@@ -129,7 +129,7 @@ app.get('/download', function(req, res) {
     }
   });*/
   //console.log("file deleted and ready to rewrite");
-  readFiles("./files/", pushData);
+  await readFiles("./files/", pushData);
   //readFiles("/root/FIRMS/viirs/SouthEast_Asia/", pushData);
   const file = `./data.json`;
   res.download(file); // Set disposition and send it.
